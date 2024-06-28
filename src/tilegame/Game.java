@@ -2,8 +2,8 @@ package tilegame;
 
 import tilegame.display.Display;
 
+import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.Graphics;
 
 public class Game implements Runnable {
 
@@ -41,7 +41,11 @@ public class Game implements Runnable {
 
         g = bs.getDrawGraphics();
 
-        g.fillRect(0, 0, width, height);
+        g.clearRect(0,0, width, height);
+
+        g.setColor(Color.red);
+        g.drawRect(10, 50, 50, 70);
+        g.fillRect(0, 0, 10, 10);
 
         bs.show();
         g.dispose();
