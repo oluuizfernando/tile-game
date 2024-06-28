@@ -40,4 +40,9 @@ public class Display {
         frame.pack(); // pra ver o canvas
     }
 
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
 }
