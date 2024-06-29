@@ -1,15 +1,19 @@
 package tilegame;
 
 import tilegame.display.Display;
+import tilegame.gfx.ImageLoader;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 public class Game implements Runnable {
 
     private Display display;
     private Thread thread;
     private boolean running = false;
+
+    private BufferedImage testImage;
 
     private BufferStrategy bs;
     private Graphics g;
@@ -25,6 +29,7 @@ public class Game implements Runnable {
 
     private void init(){
         display = new Display(title, width, height);
+        testImage = ImageLoader.loadImage("/textures/teste.png");
     }
 
     private void tick() {
@@ -42,6 +47,8 @@ public class Game implements Runnable {
         g = bs.getDrawGraphics();
 
         g.clearRect(0,0, width, height);
+
+        g.drawImage(testImage, 200, 150, width=200, height=200, null);
 
         g.setColor(Color.red);
         g.drawRect(10, 50, 50, 70);
