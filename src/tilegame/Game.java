@@ -4,10 +4,15 @@ import tilegame.display.Display;
 import tilegame.gfx.Assets;
 import tilegame.gfx.ImageLoader;
 import tilegame.gfx.SpriteSheet;
+import tilegame.input.KeyManager;
+import tilegame.states.GameState;
+import tilegame.states.MenuState;
+import tilegame.states.State;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.security.Key;
 
 public class Game implements Runnable {
 
@@ -18,24 +23,37 @@ public class Game implements Runnable {
     private BufferStrategy bs;
     private Graphics g;
 
+    private State gameState;
+    private State menuState;
+
     public int width, height;
     public String title;
+
+    private KeyManager keyManager;
 
     public Game(String title, int width, int height){
         this.width = width;
         this.height = height;
         this.title = title;
+        keyManager = new KeyManager();
     }
 
     private void init(){
         display = new Display(title, width, height);
+        display.getFrame().addKeyListener(keyManager);
         Assets.init();
+
+        gameState = new GameState(this);
+        menuState = new MenuState(this);
+        State.setState(gameState);
     }
 
-    int x = 0;
-
     private void tick() {
-        x += 1;
+        keyManager.tick();
+
+        if(State.getState() != null) {
+            State.getState().tick();
+        }
     }
 
     private void render(){
@@ -49,10 +67,15 @@ public class Game implements Runnable {
         g = bs.getDrawGraphics();
         g.clearRect(0,0, width, height);
 
-        g.drawImage(Assets.grass, x, 0, null);
+        if(State.getState() != null)
+            State.getState().render(g);
 
         bs.show();
         g.dispose();
+    }
+
+    public KeyManager getKeyManager() {
+        return keyManager;
     }
 
     public void run(){
@@ -91,7 +114,7 @@ public class Game implements Runnable {
             }
 
             if (timer >= 1000000000){
-                System.out.println("Frames: " + ticks);
+                // System.out.println("Frames: " + ticks);
                 ticks = 0;
                 timer = 0;
             }
