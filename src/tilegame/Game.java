@@ -2,6 +2,7 @@ package tilegame;
 
 import tilegame.display.Display;
 import tilegame.gfx.ImageLoader;
+import tilegame.gfx.SpriteSheet;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -13,7 +14,8 @@ public class Game implements Runnable {
     private Thread thread;
     private boolean running = false;
 
-    private BufferedImage testImage;
+    private BufferedImage test;
+    private SpriteSheet sheet;
 
     private BufferStrategy bs;
     private Graphics g;
@@ -29,7 +31,8 @@ public class Game implements Runnable {
 
     private void init(){
         display = new Display(title, width, height);
-        testImage = ImageLoader.loadImage("/textures/teste.png");
+        test = ImageLoader.loadImage("/textures/sheet.png");
+        sheet = new SpriteSheet(test);
     }
 
     private void tick() {
@@ -48,11 +51,8 @@ public class Game implements Runnable {
 
         g.clearRect(0,0, width, height);
 
-        g.drawImage(testImage, 200, 150, width=200, height=200, null);
-
-        g.setColor(Color.red);
-        g.drawRect(10, 50, 50, 70);
-        g.fillRect(0, 0, 10, 10);
+        g.drawImage(sheet.crop(0, 0,32, 32), 5, 5, null);
+        g.drawImage(sheet.crop(32, 0,32, 32), 40, 40, null);
 
         bs.show();
         g.dispose();
