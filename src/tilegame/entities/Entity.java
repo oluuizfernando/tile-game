@@ -1,15 +1,19 @@
 package tilegame.entities;
 
+import tilegame.Game;
+
 import java.awt.*;
 
 public abstract class Entity {
     // abstrato pra ninguem criar uma entidade, mas so seguir o modelo
 
     //somente as classes que extendem tem acesso
+    protected Game game;
     protected float x, y;
     protected int width, height;
 
-    public Entity(float x, float y, int width, int height) {
+    public Entity(Game game, float x, float y, int width, int height) {
+        this.game = game;
         this.x = x;
         this.y = y;
         this.width = width;
