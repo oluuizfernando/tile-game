@@ -2,8 +2,7 @@ package tilegame;
 
 import tilegame.display.Display;
 import tilegame.gfx.Assets;
-import tilegame.gfx.ImageLoader;
-import tilegame.gfx.SpriteSheet;
+import tilegame.gfx.GameCamera;
 import tilegame.input.KeyManager;
 import tilegame.states.GameState;
 import tilegame.states.MenuState;
@@ -11,8 +10,6 @@ import tilegame.states.State;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.security.Key;
 
 public class Game implements Runnable {
 
@@ -26,10 +23,12 @@ public class Game implements Runnable {
     private State gameState;
     private State menuState;
 
-    public int width, height;
+    private int width, height;
     public String title;
 
     private KeyManager keyManager;
+
+    private GameCamera gameCamera;
 
     public Game(String title, int width, int height){
         this.width = width;
@@ -42,6 +41,8 @@ public class Game implements Runnable {
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
         Assets.init();
+
+        gameCamera = new GameCamera(this, 0, 0);
 
         gameState = new GameState(this);
         menuState = new MenuState(this);
@@ -121,6 +122,18 @@ public class Game implements Runnable {
         }
 
         stop();
+    }
+
+    public GameCamera getGameCamera(){
+        return gameCamera;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public synchronized void start(){
