@@ -1,6 +1,7 @@
 package tilegame.states;
 
 import tilegame.Game;
+import tilegame.Handler;
 import tilegame.entities.creatures.Player;
 import tilegame.tiles.Tile;
 
@@ -13,19 +14,20 @@ public class GameState extends State {
     private Player player;
     private World world;
 
-    public GameState(Game game){
-        super(game);
-        player = new Player(game,0, 0);
-        world = new World(game,"res/worlds/mundo1.txt");
+    public GameState(Handler handler){
+        super(handler);
+        world = new World(handler,"res/worlds/mundo1.txt");
+        handler.setWorld(world);
+        player = new Player(handler,0, 0);
 
-        game.getGameCamera().move(100, 200);
+        handler.getGameCamera().move(100, 200);
     }
 
     @Override
     public void tick() {
         world.tick();
         player.tick();
-        game.getGameCamera().move(1, 1);
+        handler.getGameCamera().move(1, 1);
     }
 
     @Override
