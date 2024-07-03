@@ -64,7 +64,14 @@ public class World {
                 tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 4]);
             }
         }
+    }
 
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
 }
