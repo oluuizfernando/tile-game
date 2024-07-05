@@ -66,6 +66,14 @@ public class World {
         }
     }
 
+    public int getSpawnX() {
+        return spawnX;
+    }
+
+    public int getSpawnY() {
+        return spawnY;
+    }
+
     public int getWidth(){
         return width;
     }
